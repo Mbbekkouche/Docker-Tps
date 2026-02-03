@@ -10,9 +10,10 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
-// Redis client configuration
+// Redis client configuration (REDIS_URL pour Render, sinon défaut docker-compose)
+const redisUrl = process.env.REDIS_URL || `redis://${process.env.REDIS_HOST || 'redis-db'}:6379`;
 const redisClient = redis.createClient({
-  url: 'redis://redis-db:6379'
+  url: redisUrl
 });
 
 // Redis connection handling
